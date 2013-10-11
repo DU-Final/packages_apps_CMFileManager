@@ -383,9 +383,6 @@ public class NavigationActivity extends Activity
         // Apply the theme
         applyTheme();
 
-        // Show welcome message
-        showWelcomeMsg();
-
         this.mHandler = new Handler();
         this.mHandler.post(new Runnable() {
             @Override
@@ -475,30 +472,6 @@ public class NavigationActivity extends Activity
     private void init() {
         this.mHistory = new ArrayList<History>();
         this.mChRooted = FileManagerApplication.getAccessMode().compareTo(AccessMode.SAFE) == 0;
-    }
-
-    /**
-     * Method that displays a welcome message the first time the user
-     * access the application
-     */
-    private void showWelcomeMsg() {
-        boolean firstUse = Preferences.getSharedPreferences().getBoolean(
-                FileManagerSettings.SETTINGS_FIRST_USE.getId(),
-                ((Boolean)FileManagerSettings.SETTINGS_FIRST_USE.getDefaultValue()).booleanValue());
-
-        //Display the welcome message?
-        if (firstUse) {
-            AlertDialog dialog = DialogHelper.createAlertDialog(
-                this, R.drawable.ic_launcher,
-                R.string.welcome_title, getString(R.string.welcome_msg), false);
-            DialogHelper.delegateDialogShow(this, dialog);
-
-            // Don't display again this dialog
-            try {
-                Preferences.savePreference(
-                        FileManagerSettings.SETTINGS_FIRST_USE, Boolean.FALSE, true);
-            } catch (Exception e) {/**NON BLOCK**/}
-        }
     }
 
     /**
